@@ -29,6 +29,9 @@ int main(){
 		return -1;  //프로세스 종료
 	}
 	//4. 서버에 메시지 보내기 
+	//키보드로부터 메세지 입력 받기
+	fgets(sendBuffer, sizeof(sendBuffer), stdin);
+	//서버로 메세지 전송
 	write(c_socket, sendBuffer, strlen(sendBuffer));
 	//5. 서버에서 보낸 메시지 읽기 
 	n = read(c_socket, rcvBuffer, sizeof(rcvBuffer)); 
