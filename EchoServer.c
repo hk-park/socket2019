@@ -6,6 +6,8 @@
 #define PORT 10000
 
 char buffer[100] = "Hi, I'm server.\n";
+// sizeof(buffer) => 100 (배열의 크기)
+// strlen(buffer) => 15 (buffer에 저장된 문자열의 길이)
 char rcvBuffer[100];
 int main(){
 	int c_socket, s_socket;
@@ -50,7 +52,16 @@ int main(){
 			printf("rcvBuffer: %s\n", rcvBuffer);
 			if(strncasecmp(rcvBuffer, "quit", 4) == 0 || strncasecmp(rcvBuffer, "kill server", 11) == 0)
 				break;
-			write(c_socket, rcvBuffer, n); //클라이언트에게 buffer의 내용을 전송함
+			else if (!strncasecmp(rcvBuffer, "안녕하세요", strlen("안녕하세요")))
+				strcpy(buffer, "안녕하세요. 만나서 반가워요.");
+			else if (!strncasecmp(rcvBuffer, "이름이 머야?", strlen("이름이 머야?")))
+				strcpy(buffer, "내 이름은 박홍규야.");
+			else if (!strncasecmp(rcvBuffer, "몇 살이야?", strlen("몇 살이야?")))
+				strcpy(buffer, "나는 32살이야");
+			else
+				strcpy(buffer, "무슨 말인지 모르겠습니다.");
+				
+			write(c_socket, buffer, strlen(buffer)); //클라이언트에게 buffer의 내용을 전송함
 		}
 
 		close(c_socket);
